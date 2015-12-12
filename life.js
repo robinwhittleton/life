@@ -28,7 +28,7 @@ function Life() {
 
 		this.field.set(fieldBuffer);
 		this.draw();
-		window.requestAnimationFrame(this.step);
+		this.animation = window.requestAnimationFrame(this.step);
 	}
 
 	this.draw = () => {
@@ -54,13 +54,14 @@ function Life() {
 	this.field.forEach((cell, index) => this.field[index] = Math.random() < .1 ? 1 : 0);
 
 	this.image = this.ctx.createImageData(this.width, this.height);
-	
+
 	this.draw();
 
-	window.requestAnimationFrame(this.step);
+	this.animation = window.requestAnimationFrame(this.step);
 
 }
 
 window.addEventListener('DOMContentLoaded',function(){
 	let life = new Life();
+	document.querySelector('button').addEventListener('click',() => window.cancelAnimationFrame(life.animation),false);
 },false);
