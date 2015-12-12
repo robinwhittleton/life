@@ -28,6 +28,7 @@ function Life() {
 
 		this.field.set(fieldBuffer);
 		this.draw();
+		window.requestAnimationFrame(this.step);
 	}
 
 	this.draw = () => {
@@ -56,7 +57,7 @@ function Life() {
 	
 	this.draw();
 
-	window.setInterval(this.step,30);
+	window.requestAnimationFrame(this.step);
 
 }
 
