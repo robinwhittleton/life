@@ -1,0 +1,1 @@
+ES6 implementation of [Conway’s Game of Life](https://en.wikipedia.org/wiki/Conway%E2%80%99s_Game_of_Life). Learning exercise about optimsation more than anything.
