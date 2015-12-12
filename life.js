@@ -4,8 +4,10 @@ function Life() {
 	this.step = () => {
 		let fieldBuffer = new Uint8Array(this.field);
 
-		this.field.forEach((cell, index) => {
+		for (let index = 0; index < this.field.length; index++) {
 			let liveNeighbours = 0;
+			let cell = this.field[index];
+
 			liveNeighbours += this.field[index - this.width - 1];
 			liveNeighbours += this.field[index - this.width];
 			liveNeighbours += this.field[index - this.width + 1];
@@ -24,7 +26,7 @@ function Life() {
 			else if (cell === 1 && liveNeighbours > 3) fieldBuffer[index] = 0;
 			// Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 			else if (cell === 0 && liveNeighbours === 3) fieldBuffer[index] = 1;
-		});
+		};
 
 		this.field.set(fieldBuffer);
 		this.draw();
@@ -32,14 +34,15 @@ function Life() {
 	}
 
 	this.draw = () => {
-		this.field.forEach((el, index) => {
-			index = index * 4;
+		for (let index = 0; index < this.field.length; index++) {
+			let el = this.field[index];
+			let cellIndex = index * 4;
 			let fill = el === 1 ? 0 : 255; // black or white
-			this.image.data[index] = fill;     // R
-			this.image.data[index + 1] = fill; // G
-			this.image.data[index + 2] = fill; // B
-			this.image.data[index + 3] = 255;  // A
-		});
+			this.image.data[cellIndex] = fill;     // R
+			this.image.data[cellIndex + 1] = fill; // G
+			this.image.data[cellIndex + 2] = fill; // B
+			this.image.data[cellIndex + 3] = 255;  // A
+		};
 
 		this.ctx.putImageData(this.image, 0, 0);
 	};
@@ -51,7 +54,9 @@ function Life() {
 
 	this.field = new Uint8Array(this.width * this.height);
 
-	this.field.forEach((cell, index) => this.field[index] = Math.random() < .1 ? 1 : 0);
+	for (let index = 0; index < this.field.length; index++) {
+		this.field[index] = Math.random() < .1 ? 1 : 0;
+	}
 
 	this.image = this.ctx.createImageData(this.width, this.height);
 
