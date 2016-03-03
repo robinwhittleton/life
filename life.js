@@ -8,14 +8,14 @@ function Life() {
 			let liveNeighbours = 0;
 			let cell = this.field[index];
 
-			liveNeighbours += this.field[index - this.width - 1];
-			liveNeighbours += this.field[index - this.width];
-			liveNeighbours += this.field[index - this.width + 1];
-			liveNeighbours += this.field[index - 1];
-			liveNeighbours += this.field[index + 1];
-			liveNeighbours += this.field[index + this.width - 1];
-			liveNeighbours += this.field[index + this.width];
-			liveNeighbours += this.field[index + this.width + 1];
+			liveNeighbours = liveNeighbours + this.field[index - this.width - 1]
+				+ this.field[index - this.width]
+				+ this.field[index - this.width + 1]
+				+ this.field[index - 1]
+				+ this.field[index + 1]
+				+ this.field[index + this.width - 1]
+				+ this.field[index + this.width]
+				+ this.field[index + this.width + 1];
 
 			// Rules:
 			// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
