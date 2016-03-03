@@ -3,19 +3,20 @@
 function Life() {
 	this.step = () => {
 		let fieldBuffer = new Uint8Array(this.field);
+		let width = this.width;
 
 		for (let index = 0; index < this.field.length; index++) {
 			let liveNeighbours = 0;
 			let cell = this.field[index];
 
-			liveNeighbours = liveNeighbours + this.field[index - this.width - 1]
-				+ this.field[index - this.width]
-				+ this.field[index - this.width + 1]
+			liveNeighbours = liveNeighbours + this.field[index - width - 1]
+				+ this.field[index - width]
+				+ this.field[index - width + 1]
 				+ this.field[index - 1]
 				+ this.field[index + 1]
-				+ this.field[index + this.width - 1]
-				+ this.field[index + this.width]
-				+ this.field[index + this.width + 1];
+				+ this.field[index + width - 1]
+				+ this.field[index + width]
+				+ this.field[index + width + 1];
 
 			// Rules:
 			// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
