@@ -2,21 +2,22 @@
 
 function Life() {
 	this.step = () => {
-		let fieldBuffer = new Uint8Array(this.field);
 		let width = this.width;
+		let field = this.field;
+		let fieldBuffer = this.fieldBuffer;
 
-		for (let index = 0; index < this.field.length; index++) {
+		for (let index = 0; index < field.length; index++) {
 			let liveNeighbours = 0;
-			let cell = this.field[index];
+			let cell = field[index];
 
-			liveNeighbours = liveNeighbours + this.field[index - width - 1]
-				+ this.field[index - width]
-				+ this.field[index - width + 1]
-				+ this.field[index - 1]
-				+ this.field[index + 1]
-				+ this.field[index + width - 1]
-				+ this.field[index + width]
-				+ this.field[index + width + 1];
+			liveNeighbours = liveNeighbours + field[index - width - 1]
+				+ field[index - width]
+				+ field[index - width + 1]
+				+ field[index - 1]
+				+ field[index + 1]
+				+ field[index + width - 1]
+				+ field[index + width]
+				+ field[index + width + 1];
 
 			// Rules:
 			// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
@@ -29,7 +30,7 @@ function Life() {
 			else if (cell === 0 && liveNeighbours === 3) fieldBuffer[index] = 1;
 		};
 
-		this.field.set(fieldBuffer);
+		field.set(fieldBuffer);
 		this.draw();
 		this.animation = window.requestAnimationFrame(this.step);
 	}
@@ -54,6 +55,7 @@ function Life() {
 	this.height = this.canvas.height;
 
 	this.field = new Uint8Array(this.width * this.height);
+	this.fieldBuffer = new Uint8Array(this.field);
 
 	for (let index = 0; index < this.field.length; index++) {
 		this.field[index] = Math.random() < .1 ? 1 : 0;
