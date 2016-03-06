@@ -53,9 +53,11 @@ function Life() {
 	this.ctx = this.canvas.getContext('2d');
 	this.width = this.canvas.width;
 	this.height = this.canvas.height;
+	this.totalCells = this.width * this.height;
 
-	this.field = new Uint8Array(this.width * this.height);
-	this.fieldBuffer = new Uint8Array(this.field);
+	this.dataStore = new ArrayBuffer(this.totalCells * 2)
+	this.field = new Uint8Array(this.dataStore, 0, this.totalCells);
+	this.fieldBuffer = new Uint8Array(this.dataStore, this.totalCells, this.totalCells);
 
 	for (let index = 0; index < this.field.length; index++) {
 		this.field[index] = Math.random() < .1 ? 1 : 0;
