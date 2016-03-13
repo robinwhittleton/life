@@ -1,23 +1,36 @@
 'use strict';
 
 function Life() {
+	this.cellLookup = index => {
+		// To keep life self-contained wrap across field edges
+		let correctIndex;
+		if (index < 0) {
+			correctIndex = this.totalCells + index;
+		} else if (index >= this.totalCells) {
+			correctIndex = index - this.totalCells;
+		} else {
+			correctIndex = index;
+		}
+		return this.field[correctIndex];
+	};
+
 	this.step = () => {
 		let width = this.width;
 		let field = this.field;
 		let fieldBuffer = this.fieldBuffer;
 
-		for (let index = 0; index < field.length; index++) {
+		for (let index = 0; index < this.totalCells; index++) {
 			let liveNeighbours = 0;
 			let cell = field[index];
 
-			liveNeighbours = liveNeighbours + field[index - width - 1]
-				+ field[index - width]
-				+ field[index - width + 1]
-				+ field[index - 1]
-				+ field[index + 1]
-				+ field[index + width - 1]
-				+ field[index + width]
-				+ field[index + width + 1];
+			liveNeighbours = liveNeighbours + this.cellLookup(index - width - 1)
+				+ this.cellLookup(index - width)
+				+ this.cellLookup(index - width + 1)
+				+ this.cellLookup(index - 1)
+				+ this.cellLookup(index + 1)
+				+ this.cellLookup(index + width - 1)
+				+ this.cellLookup(index + width)
+				+ this.cellLookup(index + width + 1);
 
 			// Rules:
 			// Any live cell with fewer than two live neighbours dies, as if caused by under-population.
@@ -33,7 +46,7 @@ function Life() {
 		field.set(fieldBuffer);
 		this.draw();
 		this.animation = window.requestAnimationFrame(this.step);
-	}
+	};
 
 	this.draw = () => {
 		for (let index = 0; index < this.field.length; index++) {
